@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Rails Event Store in Spree</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/serif.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Rails Event Store Spree</h2>
+				</section>
+
+				<!-- WHAT RAILS EVENT STORE IS - START -->
+				<section>
+					<h2>What Rails Event Store is ?</h2>
+				</section>
+
+				<section>
+					<p>Rails Event Store is a library for publishing, consuming, storing and retrieving events</p>
+				</section>
+				<section>
+					<p> Also ... </p>
+						<ol>
+							<li>Implement Event Sourcing</li>
+							<li>Introduce Pub-Sub bus</li>
+							<li>Replace ActiveRecord callbacks and Observers</li>
+							<li>Introduce Read Models</li>
+							<li>Introduce communication layer between loosely coupled components</li>
+						</ol>
+				</section>
+				<!-- WHAT RAILS EVENT STORE IS - END -->
+
+				<!-- HOW TO IMPLEMENT RES INTO SPREE - START -->
+				<section>
+					<h2>How to implement RES into Spree</h2>
+				</section>
+
+				<section>
+					<h3>First things first, initializer</h3>
+					( after gem intsallation :trollface: )
+					<img src="img/initializer.png">
+				</section>
+
+				<section>
+					<h3>Create Event/Subscriber</h3>
+
+					<p>Event Example</p>
+					<img src="img/event_example.png">
+					<p>Notifier Example</p>
+					<img src="img/notifier_example.png">
+				</section>
+
+				<section>
+					<h3>Introduce Events into Spree SO</h3>
+
+					<img src="img/service_object_event.png">
+
+
+					<img src="img/pdp_example.png">
+
+				</section>
+				<!-- HOW TO IMPLEMENT RES INTO SPREE - END -->
+
+				<!-- WHAT GIVE US RES IN SPREE - START -->
+				<section>
+					<h2>What give us RES in Spree ?</h2>
+				</section>
+
+				<section>
+					<img src="img/benefits.png">
+				</section>
+
+				<section>
+					<h3>PRODUCTS SUGGESTIONS</h3>
+
+					<pre><code>
+ 					::Checkout::Event::AddToCart.new(
+ 						data: {
+ 							order: order.as_json,
+ 							variant: line_item.variant.as_json,
+ 							taxons: line_item.variant.product.taxons,
+ 							quantity: line_item.quantity
+ 						}
+ 					)
+					</code></pre>
+
+					<pre><code>
+						::Customer::Event::PdpVisit.new(
+							data: {
+								product: product.name,
+								taxons: product.taxons
+							}
+						)
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>And the winner is ... STATISTIC</h3>
+					<p>
+						<h2>Collaborative Filtering</h2>
+						<h2>Jaccard Index</h2>
+					</p>
+				</section>
+				<!-- WHAT GIVE US RES IN SPREE - END -->
+
+
+				<section>
+					<h2>Troubleshootings</h2>
+					<ul>
+						<li>Recognize guest Customer</li>
+						<li>Read events from DB</li>
+						<li>Storing suggestions into DB/cache</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Links</h2>
+					<p><a href="https://railseventstore.org/docs/v2/start/" target="_blank">Rails Event Store Documentation</a></p>
+					<p><a href="https://github.com/spree/spree/compare/spree-store-events" target="_blank">Branch with RES in Spree</a></p>
+					<p><a href="https://microservices.io/patterns/data/event-sourcing.html" target="_blank">Event Sourcing</a></p>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
